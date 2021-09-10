@@ -1,0 +1,14 @@
+<launch>
+
+  <arg name="use_tls" default="false" />
+
+  <node name="mqtt_bridge" pkg="mqtt_bridge" type="mqtt_bridge_node.py" output="screen">
+    <rosparam command="load" file="$(find mqtt_interact)/config/LED_test_params.yaml" />
+    <rosparam if="$(arg use_tls)" command="load" ns="mqtt" file="$(find mqtt_bridge)/config/config/tls_params.yaml" />
+  </node>
+
+  <!-- <node name="rosrun" type="LED_state_publisher.py" pkg="rosrun" screen="output" /> -->
+
+  <node pkg="mqtt_interact" type="LED_state_publisher.py" name="LED_State_Publisher" output="screen" />
+
+</launch>

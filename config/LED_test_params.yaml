@@ -1,0 +1,19 @@
+mqtt:
+  client:
+    protocol: 4      # MQTTv311
+  connection:
+    host: localhost
+    port: 1883
+    keepalive: 60
+  private_path: device/001
+serializer: json:dumps
+deserializer: json:loads
+bridge:
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: std_msgs.msg:String
+    topic_from: /led/state
+    topic_to: led/state
+  - factory: mqtt_bridge.bridge:MqttToRosBridge
+    msg_type: std_msgs.msg:String
+    topic_from: led
+    topic_to: /led
